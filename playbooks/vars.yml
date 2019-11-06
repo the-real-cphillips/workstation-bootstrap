@@ -1,0 +1,57 @@
+directories:
+  - .aws
+  - .cfg
+  - .certs
+  - personal
+  - work
+  - work/repos
+  - Go
+  - Go/src/github.com/user
+
+homebrew_repos:
+  - aws/tap
+  - homebrew/cask-fonts
+  - homebrew/cask-versions
+
+homebrew_tools:
+  - awscli
+  - aws-iam-authenticator
+  - cli53
+  - coreutils
+  - docker-credential-helper-ecr
+  - exiftool
+  - ffmpeg
+  - fontconfig
+  - fzf
+  - git
+  - gnu-sed
+  - golang
+  - htop
+  - httpie
+  - ipcalc
+  - jq
+  - kubernetes-cli
+  - kubernetes-helm
+  - libxml2
+  - node
+  - openssl
+  - packer
+  - pstree
+  - pwgen
+  - readline
+  - reattach-to-user-namespace
+  - thefuck
+  - tmate
+  - tmux
+  - tree
+  - vault
+  - vim
+  - wget
+
+homebrew_casks:
+  - font-hack-nerd-font
+  - iterm2
+  - keybase
+  - slack
+  - telegram
+  - wireshark

@@ -1,0 +1,97 @@
+- hosts: 127.0.0.1
+  connection: local
+  tasks:
+    - name: Include Variables
+      include_vars: vars.yml
+      tags: 
+        - include_vars
+
+    - name: Get user
+      command: whoami
+      register: username
+      tags:
+        - get_user_name
+
+    - debug:
+        msg: "Current user: {{ username.stdout }}"
+      tags:
+        - get_user_name
+
+    - name: Create directories
+      file:
+        path: "~/{{ item }}"
+        state: directory
+      loop: "{{ directories|flatten(levels=1) }}"
+      tags: 
+        - create_directories
+
+    - name: Tap Homebrew repositories
+      homebrew_tap:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_repos|flatten(levels=1) }}"
+      tags:
+        - tap_homebrew
+
+    - name: Install tools with homebrew
+      homebrew:
+        name: "{{ item }}"
+        state: present
+      loop: "{{ homebrew_tools|flatten(levels=1) }}"
+      tags:
+        - install_homebrew_tools
+
+    - name: Install homebrew casks
+      homebrew_cask:
+        name: "{{ item }}"
+        state: installed
+      loop: "{{ homebrew_casks|flatten(levels=1) }}"
+      tags:
+        - install_homebrew_casks
+
+    - name: Install virtualenv
+      pip:
+        name: virtualenv
+      become: yes
+      become_method: sudo
+      tags:
+        - install_virtualenv
+    
+    - name: Clone Config Repo
+      git:
+        repo: "{{ item }}"
+        dest: "~/.cfg"
+        clone: yes
+        bare: yes
+        update: yes
+      loop:
+        - 'git@github.com:the-real-cphillips/config.git'
+      notify:
+        - source_config
+      tags:
+        - clone_config
+
+    - name: Install TPM
+      git:
+        repo: https://github.com/tmux-plugins/tpm
+        dest: ~/.tmux/plugins/tpm
+        update: yes
+      tags:
+        - install_tpm
+
+    - name: Install Powerlevel9k
+      git:
+        repo: https://github.com/bhilburn/powerlevel9k.git
+        dest: ~/.oh-my-zsh/custom/themes/powerlevel9k
+        update: yes
+      tags:
+        - install_p9k
+
+    - name: Install vim plugins
+      command: vim +PlugInstall +qall
+      tags:
+        - install_vim_plugins
+
+  handlers:
+    - name: source_config
+      command: source ../dotfiles.sh
