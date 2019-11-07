@@ -2,6 +2,7 @@ directories:
   - .aws
   - .cfg
   - .certs
+  - .docker
   - personal
   - work
   - work/repos
@@ -55,3 +56,20 @@ homebrew_casks:
   - slack
   - telegram
   - wireshark
+
+pip_tools:
+  - boto
+  - boto3
+  - botocore
+  - git-up
+  - virtualenv
+
+vim_plugins:
+  - puppetlabs/puppet-syntax-vim
+  - vim-airline/vim-airline
+  - vim-airline/vim-airline-themes
+  - hashivim/vim-terraform
+  - avakhov/vim-yaml
+  - edkolev/promptline.vim
+  - terryma/vim-multiple-cursors
+  - aonemd/kuroi.vim
