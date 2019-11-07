@@ -93,14 +93,6 @@
       tags:
         - install_from_git
 
-          #    - name: Install Powerlevel9k
-          #      git:
-          #        repo: https://github.com/bhilburn/powerlevel9k.git
-          #        dest: ~/.oh-my-zsh/custom/themes/powerlevel9k
-          #        update: yes
-          #      tags:
-          #        - install_p9k
-
     - name: Build vimrc with plugins
       template:
         src: templates/vimrc.j2
