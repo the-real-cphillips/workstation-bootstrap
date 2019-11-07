@@ -8,4 +8,7 @@ When I have time, and need, I'll extend to Linux, maybe....
 
 ## Usage
 
-Run `bootstrap.sh` and then wait.
+- Run `xcode-select --install` Follow the GUI install to complete (hoping to automate this)
+- Run `bootstrap.sh` 
+- Enter your Password
+- Wait...
