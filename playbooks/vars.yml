@@ -9,6 +9,14 @@ directories:
   - Go
   - Go/src/github.com/user
 
+git_tools:
+  - name: powerlevel9k
+    repo_url: https://github.com/bhilburn/powerlevel9k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel9k
+  - name: tpm
+    repo_url: https://github.com/tmux-plugins/tpm.git
+    dest: ~/.tmux/plugins/tpm
+
 homebrew_repos:
   - aws/tap
   - homebrew/cask-fonts
