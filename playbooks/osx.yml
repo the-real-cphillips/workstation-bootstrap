@@ -18,6 +18,7 @@
       tags:
         - get_user_name
 
+### Files and Dirs ###
     - name: Create directories
       file:
         path: "~/{{ item }}"
@@ -26,6 +27,15 @@
       tags: 
         - create_directories
 
+    - name: Copy Docker Config.json for Credential Helper
+      copy:
+        dest: "~/.docker/config.json"
+        src: files/docker-config.json
+        owner: cphillips
+        mode: 0744
+      tags:
+        - copy_docker_config_json
+          
     - name: Tap Homebrew repositories
       homebrew_tap:
         name: "{{ item }}"
@@ -34,6 +44,7 @@
       tags:
         - tap_homebrew
 
+### Installs ###
     - name: Install tools with homebrew
       homebrew:
         name: "{{ item }}"
@@ -98,6 +109,7 @@
       notify:
         - Install Vim Plugins
 
+### Handlers ###
   handlers:
     - name: Source Config
       command: source ../dotfiles.sh

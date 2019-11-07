@@ -4,7 +4,7 @@ function config {
   /usr/local/bin/git --git-dir=${HOME}/.cfg/ --work-tree=${HOME}
 }
 
-mkdir -p .config-backup
+mkdir -p ~/.config-backup
 config checkout
 
 if [ $? = 0 ]; then
