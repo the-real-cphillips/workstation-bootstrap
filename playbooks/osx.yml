@@ -31,7 +31,7 @@
       copy:
         dest: "~/.docker/config.json"
         src: files/docker-config.json
-        owner: cphillips
+        owner: "{{ username.stdout }}"
         mode: 0744
       tags:
         - copy_docker_config_json
