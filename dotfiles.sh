@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+alias config='/usr/bin/git --git-dir=${HOME}/.cfg/ --work-tree=${HOME}'
+
 function config {
   /usr/local/bin/git --git-dir=${HOME}/.cfg/ --work-tree=${HOME}
 }

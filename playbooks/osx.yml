@@ -105,7 +105,7 @@
 ### Handlers ###
   handlers:
     - name: Source Config
-      command: source ../dotfiles.sh
+      command: . ../dotfiles.sh
 
     - name: Install Vim Plugins
       command: vim +PlugInstall +qall
