@@ -23,8 +23,9 @@ homebrew_repos:
   - homebrew/cask-versions
 
 homebrew_tools:
-  - awscli
+  - asciinema
   - aws-iam-authenticator
+  - awscli
   - cli53
   - coreutils
   - docker-credential-helper-ecr
@@ -49,12 +50,16 @@ homebrew_tools:
   - pwgen
   - readline
   - reattach-to-user-namespace
+  - shellcheck
+  - tfenv
+  - tflint
   - thefuck
   - tmate
   - tmux
   - tree
   - vault
   - vim
+  - watch
   - wget
 
 homebrew_casks:
