@@ -10,9 +10,9 @@ directories:
   - Go/src/github.com/user
 
 git_tools:
-  - name: powerlevel9k
-    repo_url: https://github.com/bhilburn/powerlevel9k.git
-    dest: ~/.oh-my-zsh/custom/themes/powerlevel9k
+  - name: powerlevel10k
+    repo_url: https://github.com/romkatv/powerlevel10k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
   - name: tpm
     repo_url: https://github.com/tmux-plugins/tpm.git
     dest: ~/.tmux/plugins/tpm
