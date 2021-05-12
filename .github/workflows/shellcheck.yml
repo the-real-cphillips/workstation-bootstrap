@@ -1,7 +1,7 @@
 ---
 name: Run ShellCheck
 
-on: [push, pull_request]
+on: [push]
 
 jobs:
     shellcheck:
