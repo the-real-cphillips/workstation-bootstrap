@@ -17,18 +17,20 @@ jobs:
         uses: ludeeus/action-shellcheck@master
         with:
           format: tty
-        continue-on-error: true
 
       - uses: actions/github-script@v3
+        if: github.event_name == 'pull_request' && steps.shellcheck.outputs.exitcode != 0
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
             const CODE = '```';
+            const STATUS = ":x: **Failure**, Please check your Script"
             const output = `
+            ${STATUS}
             <details>
             <summary>Output</summary>
             ${CODE}
-            ${{ steps.shellcheck.outputs.stdout }}
+            ${{ steps.fmt.outputs.stdout }}
             ${CODE}
             </details>`;
             github.issues.createComment({
@@ -37,3 +39,8 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
+      - name: End Result
+        shell: bash
+        run: |
+          echo "shellcheck"
+          test ${{ steps.shellcheck.outputs.exitcode }} -eq 0
