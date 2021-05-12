@@ -2,7 +2,7 @@
   connection: local
   tasks:
     - name: Include Variables
-      include_vars: osx_vars.yml
+      include_vars: linux_vars.yml
       tags: 
         - include_vars
 
@@ -27,39 +27,15 @@
       tags: 
         - create_directories
 
-    - name: Copy Docker Config.json for Credential Helper
-      copy:
-        dest: "~/.docker/config.json"
-        src: files/docker-config.json
-        owner: "{{ username.stdout }}"
-        mode: 0744
-      tags:
-        - copy_docker_config_json
-          
-    - name: Tap Homebrew repositories
-      homebrew_tap:
-        name: "{{ item }}"
-        state: present
-      loop: "{{ homebrew_repos|flatten(levels=1) }}"
-      tags:
-        - tap_homebrew
-
 ### Installs ###
-    - name: Install tools with homebrew
-      homebrew:
+    - name: Install Apt Packages
+      become: yes
+      apt:
         name: "{{ item }}"
-        state: present
-      loop: "{{ homebrew_tools|flatten(levels=1) }}"
+        state: latest
+      loop: "{{ apt_installs|flatten(levels=1) }}"
       tags:
-        - install_homebrew_tools
-
-    - name: Install homebrew casks
-      homebrew_cask:
-        name: "{{ item }}"
-        state: installed
-      loop: "{{ homebrew_casks|flatten(levels=1) }}"
-      tags:
-        - install_homebrew_casks
+        - install_apt_packages
 
     - name: Install pip packages
       pip:
@@ -93,19 +69,7 @@
       tags:
         - install_from_git
 
-    - name: Build vimrc with plugins
-      template:
-        src: templates/vimrc.j2
-        dest: "~/.vimrc"
-        owner: "{{ username.stdout }}"
-        mode: 0744
-      notify:
-        - Install Vim Plugins
-
 ### Handlers ###
   handlers:
     - name: Source Config
       command: . ../dotfiles.sh
-
-    - name: Install Vim Plugins
-      command: vim +PlugInstall +qall
