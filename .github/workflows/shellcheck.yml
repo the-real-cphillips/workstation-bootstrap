@@ -1,0 +1,18 @@
+---
+name: Run ShellCheck
+
+on: [pull_request]
+
+jobs:
+    shellcheck:
+      name: Shellcheck
+      runs-on: ubuntu-latest
+      defaults:
+        shell: bash
+      steps:
+      - name: Checkout
+        id: checkout
+        uses: actions/checkout@v2
+      - name: Run ShellCheck
+        id: shellcheck
+        uses: ludeeus/action-shellcheck@master

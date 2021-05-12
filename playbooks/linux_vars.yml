@@ -1,0 +1,38 @@
+directories:
+  - .aws
+  - .cfg
+  - .certs
+  - .docker
+  - repos
+  - Go
+  - Go/src/github.com/user
+
+git_tools:
+  - name: powerlevel10k
+    repo_url: https://github.com/romkatv/powerlevel10k.git
+    dest: ~/.oh-my-zsh/custom/themes/powerlevel10k
+  - name: tpm
+    repo_url: https://github.com/tmux-plugins/tpm.git
+    dest: ~/.tmux/plugins/tpm
+
+apt_installs:
+  - asciinema
+  - git
+  - htop
+  - ipcalc
+  - jq
+  - python3-dev
+  - python3-pip
+  - python3-setuptools
+  - shellcheck
+  - tmux
+  - wget
+
+pip_tools:
+  - awscli
+  - boto
+  - boto3
+  - botocore
+  - git-up
+  - thefuck
+  - xclip
