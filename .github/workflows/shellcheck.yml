@@ -20,7 +20,7 @@ jobs:
         continue-on-error: true
 
       - uses: actions/github-script@v3
-        if: github.event_name == 'pull_request'
+        if: github.event_name == 'pull_request' || github.event_name == 'push' && steps.sc.outcome == 'failure' 
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -28,7 +28,6 @@ jobs:
             const STATUS = ":x: **Failure**, Please check your Script"
             const output = `
             ${STATUS}
-            ${{ steps.sc.outcome }}
             <details>
             <summary>Output</summary>
             ${CODE}
@@ -45,4 +44,4 @@ jobs:
         shell: bash
         run: |
           echo "shellcheck"
-          test ${{ steps.sc.conclusion }} == "success"
+          test ${{ steps.sc.conclusion }} == 
