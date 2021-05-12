@@ -1,7 +1,7 @@
 ---
 name: Run ShellCheck
 
-on: [pull_request]
+on: [push]
 
 jobs:
     shellcheck:
@@ -11,6 +11,9 @@ jobs:
       - name: Checkout
         id: checkout
         uses: actions/checkout@v2
+
       - name: Run ShellCheck
-        id: shellcheck
+        id: sc
         uses: ludeeus/action-shellcheck@master
+        with:
+          format: tty
