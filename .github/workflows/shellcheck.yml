@@ -19,7 +19,7 @@ jobs:
           format: tty
 
       - uses: actions/github-script@v3
-        if: github.event_name == 'pull_request' && steps.shellcheck.outputs.exitcode != 0
+        if: github.event_name == 'pull_request' && steps.shellcheck.outcome == 'failure' 
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
