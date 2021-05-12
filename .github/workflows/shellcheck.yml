@@ -19,8 +19,9 @@ jobs:
           format: tty
         continue-on-error: true
 
-      - uses: actions/github-script@v3
-        if: github.event_name == 'pull_request' || github.event_name == 'push' && steps.sc.outcome == 'failure' 
+      - name: Comment Action
+        uses: actions/github-script@v4
+        if: github.event_name == 'pull_request' && steps.sc.outcome == 'failure' 
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
