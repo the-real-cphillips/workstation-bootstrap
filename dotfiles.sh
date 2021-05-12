@@ -4,7 +4,7 @@
 alias config='/usr/bin/git --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"'
 
 function config {
-  /usr/local/bin/git --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"
+  $(which git) --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"
 }
 
 if [[ ! -d ~/.config-backup ]]; then
@@ -15,7 +15,7 @@ if config checkout; then
   echo "[√] Config Checked Out!"
 else
   echo "[I] Backing up pre-existing dot files."; \
-  config checkout 2>&1 | egrep "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+  config checkout 2>&1 | grep -E  "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
 fi
 
 config checkout
