@@ -7,8 +7,6 @@ jobs:
     shellcheck:
       name: Shellcheck
       runs-on: ubuntu-latest
-      defaults:
-        shell: bash
       steps:
       - name: Checkout
         id: checkout
