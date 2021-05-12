@@ -20,7 +20,7 @@ jobs:
         continue-on-error: true
 
       - uses: actions/github-script@v3
-        if: github.event_name == 'pull_request' && steps.sc.outcome == 'failure' 
+        if: github.event_name == 'pull_request'
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -28,6 +28,7 @@ jobs:
             const STATUS = ":x: **Failure**, Please check your Script"
             const output = `
             ${STATUS}
+            ${{ steps.sc.outcome }}
             <details>
             <summary>Output</summary>
             ${CODE}
