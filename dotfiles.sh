@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# shellcheck disable=SC2230
+# shellcheck disable=SC2230,SC1083
 
 alias config='/usr/bin/git --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"'
 
