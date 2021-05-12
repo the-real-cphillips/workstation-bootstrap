@@ -40,8 +40,11 @@ jobs:
               repo: context.repo.repo,
               body: output
             })
+
       - name: End Result
         shell: bash
         run: |
+          echo ${{ steps.sc.outcome }}
+          echo ${{ steps.sc.outputs }}
           echo "shellcheck"
           test ${{ steps.sc.conclusion }} == 
