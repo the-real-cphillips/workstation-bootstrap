@@ -20,7 +20,7 @@ jobs:
         continue-on-error: true
 
       - uses: actions/github-script@v3
-        if: github.event_name == 'pull_request' && steps.shellcheck.outcome == 'failure' 
+        if: github.event_name == 'pull_request' && steps.sc.outcome == 'failure' 
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
@@ -31,7 +31,7 @@ jobs:
             <details>
             <summary>Output</summary>
             ${CODE}
-            ${{ steps.fmt.outputs.stdout }}
+            ${{ steps.sc.outputs.files }}
             ${CODE}
             </details>`;
             github.issues.createComment({
@@ -44,4 +44,4 @@ jobs:
         shell: bash
         run: |
           echo "shellcheck"
-          test ${{ steps.shellcheck.outputs.exitcode }} -eq 0
+          test ${{ steps.sc.conclusion }} == "success"
