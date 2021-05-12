@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+# shellcheck disable=SC2230
 
 alias config='/usr/bin/git --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"'
 
@@ -6,10 +7,11 @@ function config {
   /usr/local/bin/git --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"
 }
 
-mkdir -p ~/.config-backup
-config checkout
+if [[ ! -d ~/.config-backup ]]; then
+  mkdir -p ~/.config-backup
+fi
 
-if [ $? = 0 ]; then
+if config checkout; then
   echo "[√] Config Checked Out!"
 else
   echo "[I] Backing up pre-existing dot files."; \
@@ -17,4 +19,5 @@ else
 fi
 
 config checkout
+
 config config status.showUntrackedFiles no
