@@ -13,7 +13,7 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Run ShellCheck
-        id: shellcheck
+        id: sc
         uses: ludeeus/action-shellcheck@master
         with:
           format: tty
@@ -44,7 +44,7 @@ jobs:
       - name: End Result
         shell: bash
         run: |
-          echo ${{ steps }}
+          echo ${{ steps.sc }}
           echo ${{ steps.sc.outputs }}
           echo "shellcheck"
           test ${{ steps.sc.conclusion }} == 
