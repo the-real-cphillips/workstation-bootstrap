@@ -31,6 +31,7 @@ homebrew_tools:
   - ffmpeg
   - fontconfig
   - fzf
+  - gh
   - git
   - gnu-sed
   - golang
