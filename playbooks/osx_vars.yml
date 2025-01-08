@@ -19,8 +19,6 @@ git_tools:
 
 homebrew_repos:
   - aws/tap
-  - homebrew/cask-fonts
-  - homebrew/cask-versions
 
 homebrew_tools:
   - asciinema
@@ -45,7 +43,6 @@ homebrew_tools:
   - libxml2
   - node
   - openssl
-  - packer
   - pstree
   - pwgen
   - readline
@@ -57,7 +54,6 @@ homebrew_tools:
   - tmate
   - tmux
   - tree
-  - vault
   - vim
   - watch
   - wget
@@ -66,8 +62,6 @@ homebrew_casks:
   - font-hack-nerd-font
   - iterm2
   - keybase
-  - slack
-  - telegram
   - wireshark
 
 pip_tools:
