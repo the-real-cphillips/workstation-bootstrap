@@ -105,7 +105,7 @@
 ### Handlers ###
   handlers:
     - name: Source Config
-      command: . ../dotfiles.sh
+      command: "{{ playbook_dir }}/../dotfiles.sh"
 
     - name: Install Vim Plugins
       command: vim +PlugInstall +qall

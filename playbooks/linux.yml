@@ -95,4 +95,4 @@
 ### Handlers ###
   handlers:
     - name: Source Config
-      command: . ../dotfiles.sh
+      command: "{{ playbook_dir }}/../dotfiles.sh"
