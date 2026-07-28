@@ -4,7 +4,7 @@
 alias config='/usr/bin/git --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"'
 
 function config {
-  $(which git) --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"
+  $(which git) --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}" "$@"
 }
 
 if [[ ! -d ~/.config-backup ]]; then
