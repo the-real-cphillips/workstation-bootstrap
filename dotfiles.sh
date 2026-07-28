@@ -16,8 +16,11 @@ fi
 if config checkout; then
   echo "[√] Config Checked Out!"
 else
-  echo "[I] Backing up pre-existing dot files."; \
-  config checkout 2>&1 | grep -E  "\s+\." | awk {'print $1'} | xargs -I{} mv {} .config-backup/{}
+  echo "[I] Backing up pre-existing dot files."
+  while IFS= read -r conflict; do
+    mkdir -p ".config-backup/$(dirname "${conflict}")"
+    mv "${conflict}" ".config-backup/${conflict}"
+  done < <(config checkout 2>&1 | grep -E "\s+\." | awk '{print $1}')
 fi
 
 config checkout
