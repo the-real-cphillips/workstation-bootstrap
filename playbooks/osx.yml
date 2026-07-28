@@ -70,6 +70,14 @@
       tags:
         - install_pip_tools
 
+    - name: Create default3 virtualenv for Neovim Python3 provider
+      pip:
+        name: pynvim
+        virtualenv: "~/virtualenv/default3"
+        virtualenv_command: "python3 -m venv"
+      tags:
+        - install_pip_tools
+
     - name: Clone Config Repo
       git:
         repo: "{{ item }}"
