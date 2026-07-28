@@ -31,6 +31,7 @@ apt_installs:
   - shellcheck
   - tmux
   - wget
+  - xdg-utils
   - zsh
 
 pip_tools:
