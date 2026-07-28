@@ -80,6 +80,7 @@
         - 'git@github.com:the-real-cphillips/config.git'
       notify:
         - Source Config
+        - Install TPM Plugins
       tags:
         - clone_config
 
@@ -96,3 +97,6 @@
   handlers:
     - name: Source Config
       command: "{{ playbook_dir }}/../dotfiles.sh"
+
+    - name: Install TPM Plugins
+      command: "{{ ansible_env.HOME }}/.tmux/plugins/tpm/bin/install_plugins"
