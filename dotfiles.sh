@@ -1,6 +1,8 @@
 #!/usr/bin/env bash
 # shellcheck disable=SC2230,SC1083
 
+cd "${HOME}" || exit 1
+
 alias config='/usr/bin/git --git-dir="${HOME}"/.cfg/ --work-tree="${HOME}"'
 
 function config {
