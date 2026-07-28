@@ -3,9 +3,12 @@ directories:
   - .cfg
   - .certs
   - .docker
+  - .local/bin
   - repos
   - Go
   - Go/src/github.com/user
+
+asdf_version: "0.20.0"
 
 git_tools:
   - name: powerlevel10k
@@ -27,6 +30,7 @@ apt_installs:
   - shellcheck
   - tmux
   - wget
+  - zsh
 
 pip_tools:
   - awscli

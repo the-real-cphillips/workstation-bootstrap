@@ -61,15 +61,15 @@
       tags:
         - install_homebrew_casks
 
-    - name: Install pip packages
+    - name: Install pip packages into tools virtualenv
       pip:
         name: "{{ item }}"
-      become: yes
-      become_method: sudo
+        virtualenv: "~/.venvs/tools"
+        virtualenv_command: "python3 -m venv"
       loop: "{{ pip_tools|flatten(levels=1) }}"
       tags:
         - install_pip_tools
-    
+
     - name: Clone Config Repo
       git:
         repo: "{{ item }}"

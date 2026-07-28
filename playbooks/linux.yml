@@ -1,9 +1,11 @@
 - hosts: 127.0.0.1
   connection: local
+  vars:
+    is_wsl: false
   tasks:
     - name: Include Variables
       include_vars: linux_vars.yml
-      tags: 
+      tags:
         - include_vars
 
     - name: Get User
@@ -15,6 +17,12 @@
 
     - debug:
         msg: "[I] Current User: {{ username.stdout }}"
+      tags:
+        - get_user_name
+
+    - debug:
+        msg: "[I] Running on WSL2 — extend this playbook here if WSL-specific tasks are ever needed."
+      when: is_wsl | bool
       tags:
         - get_user_name
 
@@ -37,15 +45,30 @@
       tags:
         - install_apt_packages
 
-    - name: Install pip packages
+    - name: Install pip packages into tools virtualenv
       pip:
         name: "{{ item }}"
-      become: yes
-      become_method: sudo
+        virtualenv: "~/.venvs/tools"
+        virtualenv_command: "python3 -m venv"
       loop: "{{ pip_tools|flatten(levels=1) }}"
       tags:
         - install_pip_tools
-    
+
+    - name: Determine asdf release architecture
+      set_fact:
+        asdf_arch: "{{ 'arm64' if ansible_architecture == 'aarch64' else 'amd64' }}"
+      tags:
+        - install_asdf
+
+    - name: Install asdf
+      unarchive:
+        src: "https://github.com/asdf-vm/asdf/releases/download/v{{ asdf_version }}/asdf-v{{ asdf_version }}-linux-{{ asdf_arch }}.tar.gz"
+        dest: "~/.local/bin"
+        remote_src: yes
+        creates: "~/.local/bin/asdf"
+      tags:
+        - install_asdf
+
     - name: Clone Config Repo
       git:
         repo: "{{ item }}"

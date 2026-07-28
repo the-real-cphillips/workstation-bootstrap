@@ -24,6 +24,7 @@ homebrew_repos:
 
 homebrew_tools:
   - asciinema
+  - asdf
   - aws-iam-authenticator
   - awscli
   - cli53
@@ -51,7 +52,6 @@ homebrew_tools:
   - readline
   - reattach-to-user-namespace
   - shellcheck
-  - tfenv
   - tflint
   - thefuck
   - tmate
