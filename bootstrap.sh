@@ -62,14 +62,19 @@ else
 fi
 
 # Configure all the things and install remaining tools.
+# Cache the sudo ticket up front rather than using --ask-become-pass:
+# Ansible's become-password-prompt detection doesn't reliably recognize
+# its own custom sudo prompt on every system and can time out even though
+# a real password prompt is sitting on screen.
+sudo -v
 if [[ "${OS}" == 'Darwin' ]]; then
   brew_setup
   ansible_setup
-  ansible-playbook --ask-become-pass playbooks/osx.yml
+  ansible-playbook playbooks/osx.yml
 else
   sudo apt -y install ansible
   if [[ "${IS_WSL}" == true ]]; then
     echo -e "${YELLOW}[I]${NC} WSL2 detected."
   fi
-  ansible-playbook --ask-become-pass playbooks/linux.yml -e "is_wsl=${IS_WSL}"
+  ansible-playbook playbooks/linux.yml -e "is_wsl=${IS_WSL}"
 fi
