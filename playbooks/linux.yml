@@ -77,6 +77,23 @@
       tags:
         - install_asdf
 
+    - name: Add golang plugin to asdf
+      command: "{{ ansible_env.HOME }}/.local/bin/asdf plugin add golang"
+      args:
+        creates: "{{ ansible_env.HOME }}/.asdf/plugins/golang"
+      tags:
+        - install_golang
+
+    - name: Install latest golang via asdf
+      command: "{{ ansible_env.HOME }}/.local/bin/asdf install golang latest"
+      tags:
+        - install_golang
+
+    - name: Set golang as global asdf version
+      command: "{{ ansible_env.HOME }}/.local/bin/asdf set -u golang latest"
+      tags:
+        - install_golang
+
     - name: Clone Config Repo
       git:
         repo: "{{ item }}"
