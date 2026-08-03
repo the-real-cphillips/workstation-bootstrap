@@ -19,8 +19,6 @@ git_tools:
 
 homebrew_repos:
   - aws/tap
-  - homebrew/cask-fonts
-  - homebrew/cask-versions
 
 homebrew_tools:
   - asciinema
