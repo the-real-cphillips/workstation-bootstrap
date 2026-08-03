@@ -19,6 +19,8 @@ git_tools:
 
 homebrew_repos:
   - aws/tap
+  - hashicorp/tap
+  - terraform-linters/tap
 
 homebrew_tools:
   - asciinema
@@ -29,6 +31,7 @@ homebrew_tools:
   - coreutils
   - docker-credential-helper-ecr
   - exiftool
+  - expat
   - ffmpeg
   - fontconfig
   - fzf
@@ -66,7 +69,6 @@ homebrew_casks:
   - keybase
   - slack
   - telegram
-  - wireshark
 
 pip_tools:
   - boto

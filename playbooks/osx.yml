@@ -44,6 +44,14 @@
       tags:
         - tap_homebrew
 
+    - name: Trust tapped Homebrew repositories
+      command: brew trust --tap {{ item }}
+      register: brew_trust_result
+      changed_when: "'Already trusted' not in brew_trust_result.stdout"
+      loop: "{{ homebrew_repos|flatten(levels=1) }}"
+      tags:
+        - tap_homebrew
+
 ### Installs ###
     - name: Install tools with homebrew
       homebrew:
@@ -60,6 +68,44 @@
       loop: "{{ homebrew_casks|flatten(levels=1) }}"
       tags:
         - install_homebrew_casks
+
+    - name: Check if Homebrew Python's pyexpat module is importable
+      command: python3 -c "import pyexpat"
+      register: pyexpat_check
+      changed_when: false
+      failed_when: false
+      tags:
+        - fix_homebrew_python_pyexpat
+
+    # Homebrew's python@3 bottles link pyexpat against macOS's system
+    # libexpat on Sequoia+, but some macOS libexpat builds are missing a
+    # symbol (XML_SetAllocTrackerActivationThreshold) the bottle expects,
+    # breaking pyexpat (and therefore pip/ensurepip) entirely. Repoint the
+    # extension at Homebrew's own expat, which has the symbol.
+    - name: Work around missing libexpat symbol in Homebrew Python
+      when: pyexpat_check.rc != 0
+      tags:
+        - fix_homebrew_python_pyexpat
+      block:
+        - name: Locate active Homebrew Python's pyexpat extension
+          shell: find -L "$(brew --prefix python3)" -name 'pyexpat*.so' | head -n1
+          args:
+            executable: /bin/bash
+          register: pyexpat_so
+          changed_when: false
+
+        - name: Get Homebrew expat prefix
+          command: brew --prefix expat
+          register: expat_prefix
+          changed_when: false
+
+        - name: Repoint pyexpat at Homebrew's expat
+          command: >
+            install_name_tool -change /usr/lib/libexpat.1.dylib
+            {{ expat_prefix.stdout }}/lib/libexpat.1.dylib {{ pyexpat_so.stdout }}
+
+        - name: Re-sign patched pyexpat extension
+          command: codesign --sign - --force {{ pyexpat_so.stdout }}
 
     - name: Install pip packages into tools virtualenv
       pip:

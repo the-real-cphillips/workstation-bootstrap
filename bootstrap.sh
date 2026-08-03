@@ -66,7 +66,14 @@ fi
 # Ansible's become-password-prompt detection doesn't reliably recognize
 # its own custom sudo prompt on every system and can time out even though
 # a real password prompt is sitting on screen.
+#
+# The playbooks run long enough that macOS's default 5-minute sudo timestamp
+# expires mid-run (e.g. cask postinstall scripts that shell out to sudo),
+# so keep the ticket alive in the background for the life of this script.
 sudo -v
+( while kill -0 "$$" 2>/dev/null; do sudo -n true; sleep 60; done ) &
+SUDO_KEEPALIVE_PID=$!
+trap 'kill "${SUDO_KEEPALIVE_PID}" 2>/dev/null' EXIT
 if [[ "${OS}" == 'Darwin' ]]; then
   brew_setup
   ansible_setup
