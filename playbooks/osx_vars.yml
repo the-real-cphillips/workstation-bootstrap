@@ -45,6 +45,7 @@ homebrew_tools:
   - kubernetes-cli
   - kubernetes-helm
   - libxml2
+  - neovim
   - node
   - openssl
   - packer

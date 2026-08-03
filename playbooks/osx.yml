@@ -163,7 +163,23 @@
       command: "{{ playbook_dir }}/../dotfiles.sh"
 
     - name: Install TPM Plugins
-      command: "{{ ansible_env.HOME }}/.tmux/plugins/tpm/bin/install_plugins"
+      # tmux exits an idle server with no sessions (exit-empty), which races
+      # the `run -b` in tmux.conf that sets TMUX_PLUGIN_MANAGER_PATH via tpm.
+      # Hold the server open with a real detached session so tpm finishes
+      # before install_plugins looks up that variable.
+      shell: |
+        tmux new-session -d -s tpm_bootstrap
+        for _ in $(seq 1 10); do
+          tmux show-environment -g TMUX_PLUGIN_MANAGER_PATH >/dev/null 2>&1 && break
+          sleep 0.5
+        done
+        "{{ ansible_env.HOME }}/.tmux/plugins/tpm/bin/install_plugins"
+        tmux kill-session -t tpm_bootstrap
+      args:
+        executable: /bin/bash
 
     - name: Install Vim Plugins
-      command: vim +PlugInstall +qall
+      # vim-plug's async install needs a real terminal to signal completion;
+      # without one, `+qall` never fires and this hangs forever under
+      # ansible's command module (no tty attached). `script` fakes a tty.
+      command: script -q /dev/null vim +PlugInstall +qall

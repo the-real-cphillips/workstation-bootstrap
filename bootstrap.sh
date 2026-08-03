@@ -85,3 +85,15 @@ else
   fi
   ansible-playbook playbooks/linux.yml -e "is_wsl=${IS_WSL}"
 fi
+
+# Done. Stop the sudo keep-alive before we replace this process, so it
+# doesn't linger as an orphaned background job under the new shell.
+kill "${SUDO_KEEPALIVE_PID}" 2>/dev/null
+trap - EXIT
+
+if [[ -t 1 ]]; then
+  echo -e "${GREEN}[√]${NC} ${YELLOW}Bootstrap complete! Reloading shell...${NC}"
+  exec "${SHELL}" -l
+else
+  echo -e "${GREEN}[√]${NC} ${YELLOW}Bootstrap complete! Start a new shell (or run: exec \$SHELL -l) to pick up the new environment.${NC}"
+fi
